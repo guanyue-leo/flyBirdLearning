@@ -1,13 +1,15 @@
+import DataStore from "./DataStore.js";
+
 class Sprite {
-    constructor(ctx = null,
-                img = null,
+    constructor(img = null,
                 srcX = 0,
                 srcY = 0,
                 srcW = 0,
                 srcH = 0,
                 x = 0, y = 0,
                 width = 0, height = 0) {
-        this.ctx = ctx;
+        this.dataStore = DataStore.getInstance();
+        this.ctx = this.dataStore.ctx;
         this.img = img;
         this.srcX = srcX;
         this.srcY = srcY;
@@ -39,6 +41,10 @@ class Sprite {
             width,
             height
         );
+    }
+
+    static get(key) {
+        return DataStore.getInstance().res.get(key)
     }
 }
 export default Sprite
