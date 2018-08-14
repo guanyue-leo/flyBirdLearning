@@ -2,6 +2,7 @@ import ResourceLoader from "./js/base/ResourceLoader.js";
 import Director from "./js/Director.js";
 import Background from "./js/runtime/Background.js";
 import DataStore from "./js/base/DataStore.js";
+import Land from "./js/runtime/Land.js";
 
 class Main {
     constructor() {
@@ -10,6 +11,7 @@ class Main {
         this.canvas.height = window.innerHeight;
         this.ctx = this.canvas.getContext('2d');
         this.dataStore = DataStore.getInstance();
+        this.director = Director.getInstance();
         const loader = ResourceLoader.creat();
         loader.onLoaded(map => this.onResourceFirstLoaded(map));
         Director.getInstance();
@@ -17,14 +19,19 @@ class Main {
 
     onResourceFirstLoaded(map) {
         this.dataStore.ctx = this.ctx;
+        this.dataStore.canvas = this.canvas;
         this.dataStore.res = map;
         this.init();
     }
 
     init() {
         console.log('init');
-        this.dataStore.put('background', Background);
-        Director.getInstance().run();
+        this.dataStore
+            .put('pencil', [])
+            .put('background', Background)
+            .put('land', Land);
+        this.director.createPencil();
+        this.director.run();
     }
 }
 export default Main

@@ -2,10 +2,8 @@ import DataStore from "./DataStore.js";
 
 class Sprite {
     constructor(img = null,
-                srcX = 0,
-                srcY = 0,
-                srcW = 0,
-                srcH = 0,
+                srcX = 0, srcY = 0,
+                srcW = 0, srcH = 0,
                 x = 0, y = 0,
                 width = 0, height = 0) {
         this.dataStore = DataStore.getInstance();
