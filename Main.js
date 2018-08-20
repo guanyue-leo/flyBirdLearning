@@ -3,6 +3,7 @@ import Director from "./js/Director.js";
 import Background from "./js/runtime/Background.js";
 import DataStore from "./js/base/DataStore.js";
 import Land from "./js/runtime/Land.js";
+import Birds from "./js/player/Birds.js";
 
 class Main {
     constructor() {
@@ -25,13 +26,28 @@ class Main {
     }
 
     init() {
+        this.director.isGameOver = false;
         console.log('init');
         this.dataStore
-            .put('pencil', [])
+            .put('pencils', [])
             .put('background', Background)
+            .put('birds', Birds)
             .put('land', Land);
+        this.registerEvent();
         this.director.createPencil();
         this.director.run();
+    }
+
+    registerEvent() {
+        this.canvas.addEventListener('touchstart', e=>{
+            e.preventDefault();
+            console.log('touch');
+            if(this.director.isGameOver){
+                this.init();
+            }else{
+                this.director.birdsEvent();
+            }
+        })
     }
 }
 export default Main
