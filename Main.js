@@ -8,8 +8,8 @@ import Birds from "./js/player/Birds.js";
 class Main {
     constructor() {
         this.canvas = document.getElementById('game_canvas');
-        // this.canvas.width  = window.innerWidth;
-        // this.canvas.height = window.innerHeight;
+        this.canvas.width  = window.innerWidth;
+        this.canvas.height = window.innerHeight;
         this.ctx = this.canvas.getContext('2d');
         this.dataStore = DataStore.getInstance();
         this.director = Director.getInstance();
