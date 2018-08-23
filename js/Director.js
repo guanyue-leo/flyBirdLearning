@@ -6,6 +6,7 @@ class Director {
     constructor() {
         this.dataStore = DataStore.getInstance();
         this.moveSpeed = 2;
+        this.restart = 0;
         this.pause = false;
     }
 
@@ -84,6 +85,7 @@ class Director {
             right: birds.birdsX[0] + birds.birdsWidth[0]
         };
         const pencils = this.dataStore.get('pencils');
+        const score = this.dataStore.get('score');
         const length = pencils.length;
         // console.log(length);
         for(let i=0; i < length; i++) {
@@ -99,6 +101,12 @@ class Director {
                 console.log('撞到了');
                 this.isGameOver = true;
             }
+        }
+
+        //加分逻辑
+        if(birds.birdsX[0] > (pencils[0].x + pencils[0].width) && score.isScore) {
+            score.isScore = false;
+            score.scoreNumber++;
         }
     }
 
@@ -120,6 +128,7 @@ class Director {
             if(pencil[0].x + pencil[0].width <= 0 && pencil.length === 4){
                 pencil.shift();
                 pencil.shift();
+                this.dataStore.get('score').isScore = true;
             }
             if(pencil[0].x <= (window.innerWidth - pencil[0].width) / 2 && pencil.length === 2) {
                 this.createPencil();
@@ -128,9 +137,12 @@ class Director {
                 value.draw();
             });
             this.dataStore.get('land').draw();
+            this.dataStore.get('score').draw();
             this.dataStore.get('birds').draw();
         } else {
             console.log('游戏结束');
+            this.dataStore.get('startButton').draw();
+            this.restart = (new Date()).getTime();
             cancelAnimationFrame(this.dataStore.get('timer'));
             this.dataStore.destroy();
         }

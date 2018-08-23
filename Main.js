@@ -4,6 +4,8 @@ import Background from "./js/runtime/Background.js";
 import DataStore from "./js/base/DataStore.js";
 import Land from "./js/runtime/Land.js";
 import Birds from "./js/player/Birds.js";
+import StartButton from "./js/player/StartButton.js";
+import Score from "./js/player/Score.js";
 
 class Main {
     constructor() {
@@ -32,6 +34,8 @@ class Main {
             .put('pencils', [])
             .put('background', Background)
             .put('birds', Birds)
+            .put('startButton', StartButton)
+            .put('score', Score)
             .put('land', Land);
         this.registerEvent();
         this.director.createPencil();
@@ -42,7 +46,7 @@ class Main {
         this.canvas.addEventListener('touchstart', e=>{
             e.preventDefault();
             console.log('touch');
-            if(this.director.isGameOver){
+            if(this.director.isGameOver && (new Date()).getTime() - this.director.restart > 700){
                 this.init();
             }else{
                 this.director.birdsEvent();
