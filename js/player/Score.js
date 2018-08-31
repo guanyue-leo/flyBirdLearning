@@ -13,7 +13,8 @@ class Score {
             this.scoreNumber,
             window.innerWidth / 2, window.innerHeight / 18,
             1000
-        )
+        );
+        this.ctx.textAlign = 'center';
     }
 }
 export default Score
